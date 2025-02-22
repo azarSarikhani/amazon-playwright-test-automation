@@ -1,0 +1,40 @@
+name: Test and run 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fix node version
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.18.1"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Print Versions
+        run: |
+          echo "Printing versions:"
+          echo "node version:"
+          node --version
+          echo "npm version:"
+          npm --version
+          lsb_release -a
+
+      - name: install playwright
+        run: npm init playwright@latest
+
+      - name: Print Working Directory
+        run: pwd	
+
+      - name: run tests
+        run: npx playwright test tests/example.spec.ts
