@@ -1,0 +1,9 @@
+{
+	"name": "playwright-examples",
+	"version": "0.0.1",
+	"description": "This repo is used to demonstrate testing  with [Playwright](https://playwright.dev/) 🎭 with typescript.ts",
+	"license": "Apache-2.0",
+	"devDependencies": {
+	  "@playwright/test": "^1.45.0"
+	}
+  }
