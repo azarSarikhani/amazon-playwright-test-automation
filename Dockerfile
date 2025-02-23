@@ -12,5 +12,6 @@ RUN npx playwright install --with-deps
 
 EXPOSE 9323
 
-CMD ["sh", "-c", "npx playwright test --reporter=html && npx playwright show-report && tail -f /dev/null"]
+RUN chmod +x run-tests.sh
 
+CMD ["bash" , "run-tests.sh"]
