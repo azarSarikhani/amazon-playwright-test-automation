@@ -41,8 +41,8 @@ jobs:
         run: npx playwright test tests --reporter=html
 
       - name: List all files
-        run: ls -R
-	  
+        run: ls -a -R .
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
