@@ -72,4 +72,4 @@ To run the docker container, go to the root of the repo and run:
 ```bash
 docker compose up --build
 ```
-To see the HTML report of the tests ran in docker go to http://localhost:9323 on your favorate browser.
+To see the HTML report of the tests ran in docker go to http://localhost:9323 on your favorate browser. Docker container remains running until you kill the process using for instance Ctrl+C.
