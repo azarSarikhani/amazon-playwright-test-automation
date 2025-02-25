@@ -57,7 +57,7 @@ npx playwright install --with-deps
 To run the tests locally, add --headed if you wish to run the tests headed, they will run headlessly be default:
 
 ```bash
-npx playwright test --reporter=html
+npx playwright test
 ```
 
 To open HTML reports on a local browser, after local runs:
@@ -66,6 +66,11 @@ To open HTML reports on a local browser, after local runs:
 npx playwright show-report
 ```
 
+To change the base url either modify it's value in playwright.config.ts or pass a value for it when running the test:
+
+```bash
+BASE_URL="https://www.amazon.co.uk/" npx playwright test
+```
 
 To run the docker container, go to the root of the repo and run:
 
