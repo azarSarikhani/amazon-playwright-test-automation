@@ -4,17 +4,11 @@ const baseURL = process.env.BASE_URL || "https://www.amazon.com/";
 
 test("test", async ({page}) => {
 	await page.goto(baseURL);
-	const searchBox = page.locator("input#twotabsearchtextbox");
-	if (!(await searchBox.isVisible())) {
-		const searchBox = page.getByRole('textbox', { name: 'Search For' });
-	}
-	if (!(await searchBox.isVisible())) {
-		const searchBox = page.locator("input#nav-bb-search");
-	}
-	if (!(await searchBox.isVisible())) {
-		const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' })
-	}
-	await searchBox.fill("Nikon");
+	await page.waitForLoadState('networkidle'); // Wait until no new requests
+    await page.waitForTimeout(2000);
+	const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
+	await searchBox.click({ force: true });
+	await searchBox.fill("Nikon", { force: true });
 	await page.locator("input#nav-search-submit-button").click();
 	await page.locator('#a-autoid-0').click();
 	await page.getByRole('option', { name: 'Price: High to Low' }).locator('#s-result-sort-select_2').click();
