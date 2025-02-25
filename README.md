@@ -22,12 +22,12 @@ and sorting the serach result from price High to low, the test expects that the 
 
 ## **Inputs**
 
-### **`Amazon's URL`**
-- **Description**: URL to Amazon's website.  
+### **`Base URL`**
+- **Description**: URL to the website that is to be tested.  
 - **Required**: No.  
 - **Type**: String.
 
-Provide the URL to Amazon's website, to overwrite the default "amazon.com".
+Provide the URL to, for instance Amazon.co.uk website, to overwrite the default "amazon.com".
 
 ---
 
