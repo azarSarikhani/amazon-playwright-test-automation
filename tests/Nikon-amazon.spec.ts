@@ -11,6 +11,9 @@ test("test", async ({page}) => {
 	if (!(await searchBox.isVisible())) {
 		const searchBox = page.locator("input#nav-bb-search");
 	}
+	if (!(await searchBox.isVisible())) {
+		const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' })
+	}
 	await searchBox.fill("Nikon");
 	await page.locator("input#nav-search-submit-button").click();
 	await page.locator('#a-autoid-0').click();
