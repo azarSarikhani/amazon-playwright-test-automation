@@ -54,10 +54,10 @@ npm install
 npx playwright install --with-deps
 ```
 
-To run the tests locally, add --headed if you wish to run the tests headed, they will run headlessly be default:
+To run the tests locally, remove --headed if you wish to run the tests headless, they will run headlessly be default:
 
 ```bash
-npx playwright test
+npx playwright test --headed
 ```
 
 To open HTML reports on a local browser, after local runs:
@@ -78,3 +78,15 @@ To run the docker container, go to the root of the repo and run:
 docker compose up --build
 ```
 To see the HTML report of the tests ran in docker go to http://localhost:9323 on your favorate browser. Docker container remains running until you kill the process using for instance Ctrl+C.
+
+## **Issues**
+The tests would not run successfully in GitHub action CI pipelines. The search box element times out and never becomes visible. This could be due to one of the reasons bellow:
+
+*Amazon is continuously making network requests (ads, tracking, etc.), preventing "networkidle" from ever happening.
+*Playwright’s browsers are being blocked by Amazon.
+*The page takes too long to load due to network.
+*Different DOM structures – Amazon may have different versions of its website served based on region, browser type, or OS.
+*Dynamic Element Loading – The search bar could be loaded dynamically, causing a timing issue.
+*A/B Testing or Personalization – Some versions of Amazon may have different element IDs depending on tests they are running.
+
+## **Roadmap**
