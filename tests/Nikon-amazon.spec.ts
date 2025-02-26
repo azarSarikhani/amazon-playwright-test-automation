@@ -2,6 +2,13 @@ import { test, expect } from "@playwright/test";
 
 const baseURL = process.env.BASE_URL || "https://www.amazon.com/";
 
+
+/*
+The fuction "retryVisibility" is a helper function to reload the page if the element is not
+visible. This could be due to page taking more than usual to load or test automation 
+blockers blocking playwright browsers. Use this fuction with caution!
+This function reloads the whole page if the element specified with its locator is not visible.
+*/
 async function retryVisibility(page: any, locator: any, retries = 3, delay = 1000) {
     for (let i = 0; i < retries; i++) {
         try {
@@ -15,15 +22,23 @@ async function retryVisibility(page: any, locator: any, retries = 3, delay = 100
         }
     }
 }
-
-test("test", async ({page}) => {
+/*
+The "amazon Nikon search test" is an end to end test that tests user experience.
+It assumes that we can search for "Nikon" in the searchbox, sort the result from high
+to low price, click on the second option and click on it, finally it asserts / expects
+that this item has D3X in its Item details when we expand the See more product details 
+section. The most stuborn element is the search box. There's a helper function for it. 
+If this or any other element times out try grabbing them with alternative ways of grabbing elements.
+Here are a few examples for the search box:
+using ARIA role: const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
+using test id: const searchBox = page.locator('[data-testid="SearchBox"]');
+using element id: const searchBox = page.locator("input#twotabsearchtextbox");
+using alternative element id: const searchBox = page.locator("input#nav-bb-search");
+*/
+test("amazon Nikon search test", async ({page}) => {
 	await page.goto(baseURL, { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(2000);
 	const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
-	//alternative ways to getting searchbox
-	//using test id: const searchBox = page.locator('[data-testid="SearchBox"]');
-	//using element id: const searchBox = page.locator("input#twotabsearchtextbox");
-	//using alternative element id: const searchBox = page.locator("input#nav-bb-search");
 	await retryVisibility(page, searchBox, 3, 2000);
 	await searchBox.fill("Nikon");
 	await page.locator("input#nav-search-submit-button").click();
