@@ -9,14 +9,14 @@ visible. This could be due to page taking more than usual to load or test automa
 blockers blocking playwright browsers. Use this fuction with caution!
 This function reloads the whole page if the element specified with its locator is not visible.
 */
-async function retryVisibility(page: any, locator: any, retries = 3, delay = 1000) {
+async function retryVisibility(page: any, locator: any, retries = 5, delay = 1000) {
     for (let i = 0; i < retries; i++) {
         try {
             await expect(locator).toBeVisible();
             break;
         } catch (e) {
             if (i === retries - 1) throw e;
-            console.log(`Retry ${i + 1} failed, retrying...`);
+            console.log(`Retry ${i + 1} failed for locator: ${locator}, retrying...`);
 			await page.reload({ waitUntil: "domcontentloaded" });
             await page.waitForTimeout(delay);
         }
@@ -39,13 +39,18 @@ test("amazon Nikon search test", async ({page}) => {
 	await page.goto(baseURL, { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(2000);
 	const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
-	await retryVisibility(page, searchBox, 3, 2000);
+	await retryVisibility(page, searchBox, 5, 2000);
 	await searchBox.fill("Nikon");
 	await page.locator("input#nav-search-submit-button").click();
-	await page.locator('#a-autoid-0').click();
-	await page.getByRole('option', { name: 'Price: High to Low' }).locator('#s-result-sort-select_2').click();
+	const sortDropDown = page.locator('#a-autoid-0');
+	await retryVisibility(page, sortDropDown, 5, 2000);
+	await sortDropDown.click();
+	const priceHighToLow = page.getByRole('option', { name: 'Price: High to Low' }).locator('#s-result-sort-select_2');
+	await priceHighToLow.click();
 	await page.locator('.s-product-image-container').nth(1).click();
-	await page.getByRole("link", { name: "See more product details" }).click();
+	const seeProductDetail = page.getByRole("link", { name: "See more product details" });
+	await retryVisibility(page, seeProductDetail, 5, 2000);
+	await seeProductDetail.click();
 	await page.getByRole("button", { name: "Item details" }).click();
 	//await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('Nikon D3X');
 	//To make the tests pass comment the above line and uncomment the bellow line,
