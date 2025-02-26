@@ -82,11 +82,11 @@ To see the HTML report of the tests ran in docker go to http://localhost:9323 on
 ## **Issues**
 The tests would not run successfully in GitHub action CI pipelines. The search box element times out and never becomes visible. This could be due to one of the reasons bellow:
 
-*Amazon is continuously making network requests (ads, tracking, etc.), preventing "networkidle" from ever happening.
-*Playwright’s browsers are being blocked by Amazon.
-*The page takes too long to load due to network.
-*Different DOM structures – Amazon may have different versions of its website served based on region, browser type, or OS.
-*Dynamic Element Loading – The search bar could be loaded dynamically, causing a timing issue.
-*A/B Testing or Personalization – Some versions of Amazon may have different element IDs depending on tests they are running.
+1. Playwright’s browsers are being blocked by Amazon, preventing search box from ever being visible or enabled.
+2. Amazon is continuously making network requests (ads, tracking, etc.), preventing "networkidle" from ever happening. This is not necessarily an issue because we don't need network idle. Search box could be filled without network being idle. 
+3. The page takes too long to load due to network issues .
+4. Different DOM structures – Amazon may have different versions of its website served based on region, browser type, or OS. This could be the main reason tests run on local and container runs conducted from machines inside Finland, but they wouldn't run on GitHub runners that could be anywhere.
+5. Dynamic Element Loading – The search bar could be loaded dynamically, causing a timing issue.
+6. Personalization – Some versions of Amazon may have different element IDs depending on the browser and machine that is sending requests to them.
 
 ## **Roadmap**
