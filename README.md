@@ -90,3 +90,8 @@ The tests would not run successfully on GitHub action CI pipelines. The search b
 6. Personalization – Some versions of Amazon may have different element IDs depending on the browser and machine that is sending requests to them.
 
 ## **Roadmap**
+While this is a proof of concept or an example of what could be tested using Playwright, there is a great deal of room for improvement that both the POC and the final test set could get. Here are some of the potential additions for the future.
+
+1. Add GitHub annotation to show all of the warning and errors in the tests in the form of annotations so that there will be no need for the artefact to be downloaded to see the test results and there would be no need to go through pipeline logs.
+2. Add a step that would trigger a warning for critical tests, for example for nightly runs on main branch all test fails should be reported by sending a message to alert channel in the teams.
+3. Add test cases that would test NIKON, and nikon and the likes as well as Nikon. Since the end to end tests are meant to mimic end user behaviors many more test cases could be added to cover a wider range of end user behavior.
