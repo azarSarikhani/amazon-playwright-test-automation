@@ -5,15 +5,13 @@ const baseURL = process.env.BASE_URL || "https://www.amazon.com/";
 async function retryVisibility(page: any, locator: any, retries = 3, delay = 1000) {
     for (let i = 0; i < retries; i++) {
         try {
-            // Attempt to check if the locator is visible
             await expect(locator).toBeVisible();
-            break; // Success! Exit the loop
+            break;
         } catch (e) {
-            if (i === retries - 1) throw e; // If out of retries, throw error
-            // Retry after a delay
+            if (i === retries - 1) throw e;
             console.log(`Retry ${i + 1} failed, retrying...`);
 			await page.reload({ waitUntil: "domcontentloaded" });
-            await page.waitForTimeout(delay); // Delay before retry
+            await page.waitForTimeout(delay);
         }
     }
 }
@@ -21,13 +19,12 @@ async function retryVisibility(page: any, locator: any, retries = 3, delay = 100
 test("test", async ({page}) => {
 	await page.goto(baseURL, { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(2000);
-	//await expect(page.getByRole('searchbox', { name: 'Search Amazon' })).toBeVisible();
 	const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
-	//const searchBox = page.locator('[data-testid="SearchBox"]');
-	//const searchBox = page.locator("input#twotabsearchtextbox");
-	//const searchBox = page.locator("input#nav-bb-search");
+	//alternative ways to getting searchbox
+	//using test id: const searchBox = page.locator('[data-testid="SearchBox"]');
+	//using element id: const searchBox = page.locator("input#twotabsearchtextbox");
+	//using alternative element id: const searchBox = page.locator("input#nav-bb-search");
 	await retryVisibility(page, searchBox, 3, 2000);
-	//await searchBox.click({ force: true });
 	await searchBox.fill("Nikon");
 	await page.locator("input#nav-search-submit-button").click();
 	await page.locator('#a-autoid-0').click();
