@@ -35,13 +35,7 @@ using test id: const searchBox = page.locator('[data-testid="SearchBox"]');
 using element id: const searchBox = page.locator("input#twotabsearchtextbox");
 using alternative element id: const searchBox = page.locator("input#nav-bb-search");
 */
-test("amazon Nikon search test", async ({browser}) => {
-	// Set desired geolocation coordinates
-	const context = await browser.newContext({
-		geolocation: { latitude: 60.1695, longitude: 24.9354 }, // Helsinki, Finland
-		permissions: ["geolocation"],
-	  });
-	  const page = await context.newPage();
+test("amazon Nikon search test", async ({page}) => {
 	await page.goto(baseURL, { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(2000);
 	const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
@@ -58,8 +52,8 @@ test("amazon Nikon search test", async ({browser}) => {
 	await retryVisibility(page, seeProductDetail, 5, 2000);
 	await seeProductDetail.click();
 	await page.getByRole("button", { name: "Item details" }).click();
-	//await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('Nikon D3X');
+	await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('Nikon D3X');
 	//To make the tests pass comment the above line and uncomment the bellow line,
 	//At the time of writting this file the second choice in search list was Nikon J3 and not D3X
-  	await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('J3');  
+  	//await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('J3');  
 });
