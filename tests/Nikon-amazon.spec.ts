@@ -52,8 +52,8 @@ test("amazon Nikon search test", async ({page}) => {
 	await retryVisibility(page, seeProductDetail, 5, 2000);
 	await seeProductDetail.click();
 	await page.getByRole("button", { name: "Item details" }).click();
-	//await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('Nikon D3X');
+	await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('Nikon D3X');
 	//To make the tests pass comment the above line and uncomment the bellow line,
-	//At the time of writting this file the second choice in search list was Nikon D6 and not D3X
-  	await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('D6 FX-Format');  
+	//At the time of writting this file the second choice in search list was Nikon J3 and not D3X
+  	//await expect(page.locator('#productDetails_expanderTables_depthLeftSections')).toContainText('J3');  
 });
